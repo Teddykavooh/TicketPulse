@@ -1,0 +1,6 @@
+@use "../../shared.scss";
+
+.page {
+    height: 80vh;
+    background-color: shared.$primary-color;
+}

@@ -9,10 +9,11 @@ import Contact from "./components/Contact";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}></Route>
-      <Route index element={<Home />}></Route>
-      <Route path="events" element={<Events />}></Route>
-      <Route path="contact" element={<Contact />}></Route>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="events" element={<Events />} />
+        <Route path="contact" element={<Contact />} />
+      </Route>
     </Routes>
   );
 }

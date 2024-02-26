@@ -1,0 +1,41 @@
+@use "../../shared.scss";
+
+.header {
+  height: 6vh;
+  width: auto;
+  background-color: shared.$primary-dark-color;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+
+    li {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      color: shared.$text-primary-color;
+      padding: 0 1vw;
+
+      a {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        text-decoration: none;
+        color: shared.$text-primary-color;
+
+        &:hover {
+          color: shared.$primary-color;
+        }
+      }
+
+      svg {
+        font-size: 1.4vw;
+      }
+    }
+  }
+}
