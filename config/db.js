@@ -32,7 +32,7 @@ db.query(createEventsTableQuery, (err, results) => {
   if (err) {
     console.error("Error creating events table:", err);
   } else {
-    console.log("Events table created successfully", results);
+    console.log("Events table created successfully");
   }
 });
 
@@ -51,7 +51,7 @@ db.query(createTicketsTableQuery, (err, results) => {
   if (err) {
     console.error("Error creating tickets table:", err);
   } else {
-    console.log("Tickets table created successfully", results);
+    console.log("Tickets table created successfully");
   }
 });
 
