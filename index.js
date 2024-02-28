@@ -42,14 +42,14 @@ app.get("/api/get/:id", (req, res) => {
 // Route to create an event
 app.post("/api/create", (req, res) => {
   const event_name = req.body.name;
-  const event_desc = req.body.eventDesc;
-  const ticket_vip_price = req.body.vipPrice;
-  const ticket_reg_price = req.body.regPrice;
+  const event_desc = req.body.description;
+  const ticket_vip_price = req.body.VIPTPrice;
+  const ticket_reg_price = req.body.RegTPrice;
   const event_attendees = req.body.attendees;
-  const booked_attendees = req.body.bAttendees;
+  const booked_attendees = req.body.booked;
 
   db.query(
-    "INSERT INTO events (name, description, VIPTprice, RegTprice, attendees, booked) VALUES (?,?,?,?,?)",
+    "INSERT INTO events (name, description, VIPTPrice, RegTPrice, attendees, booked) VALUES (?,?,?,?,?,?)",
     [
       event_name,
       event_desc,
@@ -75,15 +75,15 @@ app.post("/api/create", (req, res) => {
 
 // Route to update an event
 app.put("/api/update/:id", (req, res) => {
-  const id = req.params.id;
+  const event_id = req.params.id;
   const event_name = req.body.name;
-  const event_desc = req.body.eventDesc;
-  const ticket_vip_price = req.body.vipPrice;
-  const ticket_reg_price = req.body.regPrice;
+  const event_desc = req.body.description;
+  const ticket_vip_price = req.body.VIPTPrice;
+  const ticket_reg_price = req.body.RegTPrice;
   const event_attendees = req.body.attendees;
-  const booked_attendees = req.body.bAttendees;
+  const booked_attendees = req.body.booked;
   db.query(
-    "UPDATE events SET name=?, description=?, price=?, ticket_type=?, attendees=? WHERE id=?",
+    "UPDATE events SET name=?, description=?, VIPTPrice=?, RegTPrice=?, attendees=?, booked=? WHERE id=?",
     [
       event_name,
       event_desc,
@@ -91,7 +91,7 @@ app.put("/api/update/:id", (req, res) => {
       ticket_reg_price,
       event_attendees,
       booked_attendees,
-      id,
+      event_id,
     ],
     (err, result) => {
       if (err) {
