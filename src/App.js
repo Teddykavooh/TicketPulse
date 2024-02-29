@@ -5,6 +5,8 @@ import Layout from "./components/Layout";
 import Home from "./components/Home";
 import Events from "./components/Events";
 import Contact from "./components/Contact";
+import Login from "./components/Login";
+import Event from "./components/Event";
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Route index element={<Home />} />
         <Route path="events" element={<Events />} />
         <Route path="contact" element={<Contact />} />
+        <Route path="login" element={<Login />} />
+        <Route path="events/:id" element={<Event />} />
       </Route>
     </Routes>
   );

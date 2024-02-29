@@ -31,10 +31,14 @@
         &:hover {
           color: shared.$primary-color;
         }
-      }
 
-      svg {
-        font-size: 1.4vw;
+        svg {
+          font-size: 1.4vw;
+        }
+
+        p {
+          font-size: 1.4vw;
+        }
       }
     }
   }

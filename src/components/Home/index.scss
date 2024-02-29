@@ -1,0 +1,34 @@
+@use "../../shared.scss";
+
+.home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1vh;
+  color: shared.$primary-dark-color;
+  padding: 1vw;
+    // height: 60% !important;
+  //   border: 20px solid aquamarine !important;
+
+  svg {
+    font-size: 10vw;
+  }
+
+  .desc {
+    font-weight: 400;
+    font-size: 2vw;
+    width: 50%;
+    text-align: center;
+  }
+
+  .smaller {
+    font-size: 5vw;
+  }
+
+  .shortDesc {
+    font-size: 1.5vw;
+    font-style: italic;
+    color: shared.$secondary-color;
+  }
+}

@@ -13,8 +13,10 @@ const Header = () => {
           </a>
         </li>
         <li>
-          <VscAccount />
-          <p>Account</p>
+          <a href="/login">
+            <VscAccount />
+            <p>Account</p>
+          </a>
         </li>
       </ul>
     </div>
