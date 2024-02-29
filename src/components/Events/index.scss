@@ -7,6 +7,10 @@
   height: 100%;
   width: 80%;
   margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   .eventCont {
     display: flex;
@@ -53,7 +57,7 @@
 
     .altP {
       font-weight: 600;
-      font-size: 5vw;
+      font-size: 3vw;
       color: shared.$primary-dark-color;
     }
   }

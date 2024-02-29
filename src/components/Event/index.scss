@@ -6,6 +6,12 @@
   justify-content: center;
   align-items: center;
 
+  .altP {
+    font-weight: 600;
+    font-size: 3vw;
+    color: shared.$primary-dark-color;
+  }
+
   .anEventV {
     border: 1vw solid shared.$secondary-color;
     padding: 1vw;
