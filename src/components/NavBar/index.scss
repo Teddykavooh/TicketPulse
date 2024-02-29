@@ -16,7 +16,7 @@
 
     a {
       text-decoration: none;
-      color: shared.$text-primary-color;
+      color: shared.$primary-dark-color;
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -28,7 +28,7 @@
       // background-color: aquamarine;
 
       &:hover {
-        color: shared.$primary-dark-color;
+        color: shared.$text-primary-color;
       }
 
       svg {
@@ -45,7 +45,7 @@
     }
 
     a.active {
-      border-bottom: 0.8vh solid shared.$primary-dark-color;
+      border-bottom: 0.8vh solid shared.$text-primary-color;
     }
   }
 

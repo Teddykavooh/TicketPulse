@@ -2,7 +2,7 @@ import "./index.scss";
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import { useParams } from "react-router-dom";
-import { IoMdAddCircle } from "react-icons/io";
+import { IoMdAddCircle, IoMdRemoveCircle } from "react-icons/io";
 
 const Event = () => {
   const { id } = useParams();
@@ -14,7 +14,33 @@ const Event = () => {
     });
   }, [id]);
 
-  console.log("This is my data: " + "\n", myEvent);
+  // console.log("This is my data: " + "\n", myEvent);
+
+  const [vipCount, setVipCount] = useState(0);
+  const [regularCount, setRegularCount] = useState(0);
+
+  const handleIncrement = ticketType => {
+    const totalTickets = vipCount + regularCount;
+    if (totalTickets < 5) {
+      if (ticketType === "VIP" && vipCount < 5) {
+        setVipCount(vipCount + 1);
+      } else if (ticketType === "Regular" && regularCount < 5) {
+        setRegularCount(regularCount + 1);
+      }
+    }
+  };
+
+  const handleDecrement = ticketType => {
+    const totalTickets = vipCount + regularCount;
+
+    if (totalTickets > 0) {
+      if (ticketType === "VIP" && vipCount > 0) {
+        setVipCount(vipCount - 1);
+      } else if (ticketType === "Regular" && regularCount > 0) {
+        setRegularCount(regularCount - 1);
+      }
+    }
+  };
 
   return (
     <div className="container event-page">
@@ -45,18 +71,31 @@ const Event = () => {
             </p>
           </div>
           <div className="bookT">
-            <div className="bView">
-              <button>
-                VIP Ticket <IoMdAddCircle />
-              </button>
-              <Counter />
+            <div className="row1">
+              <div className="bView">
+                <div className="col">
+                  <label>VIP Tickets</label>
+                  <div className="rCol">
+                    <IoMdAddCircle onClick={() => handleIncrement("VIP")} />
+                    <IoMdRemoveCircle onClick={() => handleDecrement("VIP")} />
+                  </div>
+                </div>
+                <span>{vipCount}</span>
+              </div>
+              <div className="bView">
+                <div className="col">
+                  <label>Regular Tickets</label>
+                  <div className="rCol">
+                    <IoMdAddCircle onClick={() => handleIncrement("Regular")} />
+                    <IoMdRemoveCircle
+                      onClick={() => handleDecrement("Regular")}
+                    />
+                  </div>
+                </div>
+                <span>{regularCount}</span>
+              </div>
             </div>
-            <div className="bView">
-              <button>
-                Regular Ticket <IoMdAddCircle />
-              </button>
-              <Counter />
-            </div>
+            <div className="rTicketsB">Reserve Tickets</div>
           </div>
         </div>
       ) : (

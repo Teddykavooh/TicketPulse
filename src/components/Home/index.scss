@@ -11,6 +11,11 @@
     // height: 60% !important;
   //   border: 20px solid aquamarine !important;
 
+  h1 {
+    color: shared.$text-primary-color;
+    font-style: italic;
+  }
+
   svg {
     font-size: 10vw;
   }
