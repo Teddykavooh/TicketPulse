@@ -42,6 +42,34 @@ const Event = () => {
     }
   };
 
+  const reserveTickets = () => {
+    // Determine the selected ticket type(s)
+    let ticketTypeV;
+    if (vipCount > 0 && regularCount > 0) {
+      ticketTypeV = "Both";
+    } else if (vipCount > 0) {
+      ticketTypeV = "VIP";
+    } else {
+      ticketTypeV = "Regular";
+    }
+
+    const ticketData = {
+      eventId: myEvent.id,
+      eventName: myEvent.name,
+      ticketType: ticketTypeV,
+      vipTickets: vipCount,
+      regularTickets: regularCount,
+    };
+
+    Axios.post("http://localhost:8800/api/reserveTickets", ticketData)
+      .then(response => {
+        console.log("Reservation successful:", response.data);
+      })
+      .catch(error => {
+        console.error("Error during reservation:", error);
+      });
+  };
+
   return (
     <div className="container event-page">
       {Object.keys(myEvent).length > 0 ? (
@@ -95,7 +123,9 @@ const Event = () => {
                 <span>{regularCount}</span>
               </div>
             </div>
-            <div className="rTicketsB">Reserve Tickets</div>
+            <div className="rTicketsB" onClick={() => console.log("Pressed")}>
+              Reserve Tickets
+            </div>
           </div>
         </div>
       ) : (
