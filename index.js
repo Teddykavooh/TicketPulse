@@ -13,11 +13,12 @@ app.use(express.json());
 app.get("/api/get", (req, res) => {
   db.query("SELECT * FROM events", (err, result) => {
     if (err) {
-      console.log("Error getting events:", err);
+      console.log("Error fetching events:", err);
     } else {
       console.log("Events fetched successfully");
-      res.status(200).json({ message: "Event updated successfully" });
-      res.send(result);
+      res
+        .status(200)
+        .json({ message: "Events fetched successfully", data: result });
     }
   });
 });
@@ -27,14 +28,15 @@ app.get("/api/get/:id", (req, res) => {
   const id = req.params.id;
   db.query("SELECT * FROM events WHERE id = ?", id, (err, result) => {
     if (err) {
-      console.error("Error getting event: " + id, err);
-      res.status(500).send("Error getting event");
+      console.error("Error fetching the event: " + id, err);
+      res.status(500).send("Error fetching event");
     } else if (result.affectedRows === 0) {
       res.status(404).send("Event not found");
     } else {
-      console.log("Event updated successfully");
-      res.status(200).json({ message: "Event fetched successfully" });
-      res.send(result);
+      console.log("Event fetched successfully");
+      res
+        .status(200)
+        .json({ message: "Event fetched successfully", data: result });
     }
   });
 });
@@ -118,7 +120,7 @@ app.delete("/api/delete/:id", (req, res) => {
       res.status(404).send("Event not found");
     } else {
       console.log("Event deleted successfully");
-      res.status(200).json({ message: "Event updated successfully" });
+      res.status(200).json({ message: "Event deleted successfully" });
     }
   });
 });
