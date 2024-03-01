@@ -1,7 +1,44 @@
 import "./index.scss";
+import React, { useState } from "react";
+import Axios from "axios";
 import { FaRegUser, FaEnvelope, FaLock, FaEye } from "react-icons/fa";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleLogin = async () => {
+    console.log("Email, Pass:", email, password);
+    try {
+      const response = await Axios.post(
+        "http://localhost:8800/api/auth/login",
+        {
+          email: email,
+          password: password,
+        },
+      );
+
+      // Handle the response from the server
+      if (response.data.token) {
+        // Successfully logged in
+        // console.log("User logged in successfully");
+        alert("User logged in successfully");
+
+        // Save the token to localStorage
+        localStorage.setItem("token", JSON.stringify(response.data.token));
+        console.log("Token", localStorage.getItem("token"));
+      } else {
+        // Login failed
+        // console.error("Login failed:", response.data.error);
+        alert("Login failed, check credentions");
+      }
+    } catch (error) {
+      console.error("Error during login:", error.message);
+      // Handle other errors, such as network issues
+    }
+  };
+
   return (
     <div className="loginCont">
       <div className="screen-1">
@@ -67,7 +104,13 @@ const Login = () => {
           <div className="sec-2">
             {/* <ion-icon name="mail-outline"></ion-icon> */}
             <FaEnvelope />
-            <input type="email" name="email" placeholder="Username@gmail.com" />
+            <input
+              type="email"
+              placeholder="username@sth.com"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+            />
           </div>
         </div>
         <div className="password">
@@ -77,15 +120,27 @@ const Login = () => {
             <FaLock />
             <input
               className="pas"
-              type="password"
-              name="password"
-              placeholder="············"
+              type={showPassword ? "text" : "password"}
+              placeholder="************"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
             />
             {/* <ion-icon class="show-hide" name="eye-outline"></ion-icon> */}
-            <FaEye className="show-hide" />
+            <FaEye
+              className="show-hide"
+              onClick={() => setShowPassword(!showPassword)}
+            />
           </div>
         </div>
-        <button className="login">Login</button>
+        <button
+          className="login"
+          onClick={() => {
+            handleLogin();
+          }}
+        >
+          Login
+        </button>
         <div className="footerL">
           <span>Sign up</span>
           <span>Forgot Password?</span>
