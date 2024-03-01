@@ -7,6 +7,9 @@ import { IoMdAddCircle, IoMdRemoveCircle } from "react-icons/io";
 const Event = () => {
   const { id } = useParams();
   const [myEvent, setMyEvent] = useState([]);
+  const [userEmail, setUserEmail] = useState("");
+  const [vipCount, setVipCount] = useState(0);
+  const [regularCount, setRegularCount] = useState(0);
 
   const fetchData = async () => {
     try {
@@ -22,9 +25,6 @@ const Event = () => {
   }, [id]);
 
   // console.log("This is my data: " + "\n", myEvent);
-
-  const [vipCount, setVipCount] = useState(0);
-  const [regularCount, setRegularCount] = useState(0);
 
   const handleIncrement = ticketType => {
     const totalTickets = vipCount + regularCount;
@@ -50,41 +50,71 @@ const Event = () => {
   };
 
   const reserveTickets = () => {
-    // Determine the selected ticket type(s) and price
-    let ticketTypeV, totalAmount;
-    if (vipCount > 0 && regularCount > 0) {
-      ticketTypeV = "Both";
-      totalAmount =
-        vipCount * myEvent.VIPTPrice + regularCount * myEvent.RegTPrice;
-    } else if (vipCount > 0) {
-      ticketTypeV = "VIP";
-      totalAmount = vipCount * myEvent.VIPTPrice;
-    } else {
-      ticketTypeV = "Regular";
-      totalAmount = regularCount * myEvent.RegTPrice;
+    if (!validateEmail(userEmail)) {
+      alert("Please provide your email before reserving tickets.");
+      return;
     }
-
-    //Determine pri
-
-    const ticketData = {
-      eventId: myEvent.id,
-      eventName: myEvent.name,
-      ticketType: ticketTypeV,
-      vipTickets: vipCount,
-      regularTickets: regularCount,
-      amount: totalAmount,
-    };
-
-    Axios.post("http://localhost:8800/api/reserveTicket", ticketData)
+    // Check existing reservations for the given email and event
+    Axios.get(
+      `http://localhost:8800/api/getReservations/${myEvent.id}/${userEmail}`,
+    )
       .then(response => {
-        // console.log("Reservation successful:", response.data);
-        alert("Reservation successful");
-        fetchData();
+        const totalReservations = response.data.totalReservations;
+
+        if (totalReservations >= 5) {
+          alert(
+            "You have reached the maximum limit of reservations for this event.",
+          );
+        } else {
+          // Proceed with the reservation
+
+          // Determine the selected ticket type(s) and price
+          let ticketTypeV, totalAmount;
+          if (vipCount > 0 && regularCount > 0) {
+            ticketTypeV = "Both";
+            totalAmount =
+              vipCount * myEvent.VIPTPrice + regularCount * myEvent.RegTPrice;
+          } else if (vipCount > 0) {
+            ticketTypeV = "VIP";
+            totalAmount = vipCount * myEvent.VIPTPrice;
+          } else {
+            ticketTypeV = "Regular";
+            totalAmount = regularCount * myEvent.RegTPrice;
+          }
+
+          //Determine pri
+
+          const ticketData = {
+            eventId: myEvent.id,
+            eventName: myEvent.name,
+            ticketType: ticketTypeV,
+            vipTickets: vipCount,
+            regularTickets: regularCount,
+            amount: totalAmount,
+            email: userEmail,
+          };
+
+          Axios.post("http://localhost:8800/api/reserveTicket", ticketData)
+            .then(response => {
+              // console.log("Reservation successful:", response.data);
+              alert("Reservation successful");
+              fetchData();
+            })
+            .catch(error => {
+              // console.error("Error during reservation:", error);
+              alert("Error during reservation");
+            });
+        }
       })
       .catch(error => {
-        // console.error("Error during reservation:", error);
-        alert("Error during reservation");
+        console.error("Error fetching existing reservations:", error);
       });
+  };
+
+  const validateEmail = email => {
+    // Basic email validation using a regular expression
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
   return (
@@ -139,6 +169,14 @@ const Event = () => {
                 </div>
                 <span>{regularCount}</span>
               </div>
+            </div>
+            <div className="emailForm">
+              <label>Email:</label>
+              <input
+                type="email"
+                value={userEmail}
+                onChange={e => setUserEmail(e.target.value)}
+              />
             </div>
             <div className="rTicketsB" onClick={() => reserveTickets()}>
               Reserve Tickets
