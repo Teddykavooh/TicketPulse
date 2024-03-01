@@ -53,6 +53,9 @@ const Event = () => {
     if (!validateEmail(userEmail)) {
       alert("Please provide your email before reserving tickets.");
       return;
+    } else if (!(vipCount + regularCount)) {
+      alert("Please, add tickets.");
+      return;
     }
     // Check existing reservations for the given email and event
     Axios.get(
@@ -60,6 +63,7 @@ const Event = () => {
     )
       .then(response => {
         const totalReservations = response.data.totalReservations;
+        console.log("TotalReservations: ", totalReservations);
 
         if (totalReservations >= 5) {
           alert(
@@ -96,12 +100,12 @@ const Event = () => {
 
           Axios.post("http://localhost:8800/api/reserveTicket", ticketData)
             .then(response => {
-              // console.log("Reservation successful:", response.data);
+              console.log("Reservation successful:", response.data);
               alert("Reservation successful");
               fetchData();
             })
             .catch(error => {
-              // console.error("Error during reservation:", error);
+              console.error("Error during reservation:", error);
               alert("Error during reservation");
             });
         }
@@ -174,6 +178,7 @@ const Event = () => {
               <label>Email:</label>
               <input
                 type="email"
+                placeholder="sth@sth.com"
                 value={userEmail}
                 onChange={e => setUserEmail(e.target.value)}
               />

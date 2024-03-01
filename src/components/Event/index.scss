@@ -50,7 +50,7 @@
     }
 
     .bookT {
-      height: 14vh;
+      height: 18vh;
       background-color: shared.$primary-dark-color;
       opacity: 0.8;
       padding: 1vw;
@@ -66,6 +66,44 @@
         justify-content: space-evenly;
         align-items: center;
         width: 100%;
+
+        .bView {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          width: 12vw;
+          color: shared.$text-primary-color;
+          // border: 2px solid white;
+
+          span {
+            font-weight: 600;
+            font-size: 2vw;
+            color: shared.$secondary-color;
+          }
+
+          .col {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            // border: 2px solid white;
+
+            label {
+              font-weight: 600;
+              font-style: italic;
+            }
+
+            .rCol {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+            }
+
+            svg {
+              font-size: 2vw;
+            }
+          }
+        }
       }
 
       .rTicketsB {
@@ -77,41 +115,20 @@
         cursor: pointer;
       }
 
-      svg {
-        font-size: 2vw;
-      }
-
-      .bView {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        width: 12vw;
-        color: shared.$text-primary-color;
-        // border: 2px solid white;
-
-        span {
+      .emailForm {
+        label {
+          color: shared.$text-primary-color;
           font-weight: 600;
-          font-size: 2vw;
-          color: shared.$secondary-color;
+          font-style: italic;
         }
-
-        .col {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          // border: 2px solid white;
-
-          label {
-            font-weight: 600;
-            font-style: italic;
-          }
-
-          .rCol {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-          }
+        input {
+          border: none;
+          border-bottom: 3px solid shared.$secondary-color;
+          background-color: transparent;
+          // padding: 1vw;
+          text-align: center;
+          font-size: 1rem;
+          color: shared.$text-primary-color;
         }
       }
     }
