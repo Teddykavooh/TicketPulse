@@ -2,6 +2,7 @@ const express = require("express");
 const db = require("./config/db");
 const cors = require("cors");
 const updateBookedColumn = require("./src/Components/updateBooked");
+const GetReservations = require("./src/Components/getReservations");
 
 const app = express();
 const PORT = 8800;
@@ -137,10 +138,11 @@ app.post("/api/reserveTicket", async (req, res) => {
     const vipTickets = req.body.vipTickets;
     const regularTickets = req.body.regularTickets;
     const amount = req.body.amount;
+    const email = req.body.email;
 
     const createTicketQuery = `
-      INSERT INTO tickets (event, eventName, ticketType, vipTickets, regularTickets, amount)
-      VALUES (?, ?, ?, ?, ?, ?)
+      INSERT INTO tickets (event, eventName, ticketType, vipTickets, regularTickets, amount, email)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
 
     await db.query(createTicketQuery, [
@@ -150,6 +152,7 @@ app.post("/api/reserveTicket", async (req, res) => {
       vipTickets,
       regularTickets,
       amount,
+      email,
     ]);
 
     // return the inserted row
@@ -203,11 +206,11 @@ app.get("/api/tickets/:id", async (req, res) => {
 app.put("/api/tickets/:id", async (req, res) => {
   try {
     const ticketId = req.params.id;
-    const { eventName, ticketType, vipTickets, regularTickets, amount } =
+    const { eventName, ticketType, vipTickets, regularTickets, amount, email } =
       req.body;
     const updateTicketQuery = `
       UPDATE tickets
-      SET eventName = ?, ticketType = ?, vipTickets = ?, regularTickets = ?, amount = ?
+      SET eventName = ?, ticketType = ?, vipTickets = ?, regularTickets = ?, amount = ?, email = ?
       WHERE id = ?
     `;
     await db.query(updateTicketQuery, [
@@ -216,6 +219,7 @@ app.put("/api/tickets/:id", async (req, res) => {
       vipTickets,
       regularTickets,
       amount,
+      email,
       ticketId,
     ]);
     res.status(200).json({ message: "Ticket updated successfully" });
@@ -239,28 +243,39 @@ app.delete("/api/tickets/:id", async (req, res) => {
 });
 
 // Route to get the sum of vipTickets and regularTickets by eventID and email
-app.get("/api/getReservations/:eventId/:email", async (req, res) => {
-  try {
-    const eventId = req.params.eventId;
-    const email = req.params.email;
+// app.get("/api/getReservations/:eventId/:email", async (req, res) => {
+//   try {
+//     const event_id = req.params.eventId;
+//     const mail = req.params.email;
 
-    // Modify the SQL query to calculate the sum of vipTickets and regularTickets
-    const getReservationsByQuery = `
-      SELECT COALESCE(SUM(vipTickets + regularTickets), 0) AS totalReservations
-      FROM tickets
-      WHERE event = ? AND email = ?
-    `;
+//     // Modify the SQL query to calculate the sum of vipTickets and regularTickets
+//     const getReservationsByQuery = `
+//     SELECT COALESCE( SUM( tickets.vipTickets + tickets.regularTickets ), 0 ) AS totalReservations FROM tickets WHERE event = ? AND email = ?
+//     `;
 
-    const result = await db.query(getReservationsByQuery, [eventId, email]);
+//     const result = await db.query(getReservationsByQuery, [event_id, mail]);
 
-    const totalReservations = result[0].totalReservations;
+//     const totalReservations =
+//       result.length > 0 ? result[0].totalReservations : 0;
 
-    res.status(200).json({ totalReservations });
-  } catch (error) {
-    console.error("Error fetching reservations:", error);
-    res.status(500).json({ error: "Error fetching reservations" });
-  }
-});
+//     console.log("Result: ", result);
+//     console.log("Result[0]: ", result[0]);
+//     console.log("eventID: ", eventId);
+//     console.log("Email: ", email);
+//     console.log("id: ", typeof eventId);
+//     console.log("email type: ", typeof email);
+//     console.log("totalReservations: ", totalReservations);
+//     console.log("SQL Query: ", getReservationsByQuery);
+//     console.log("SQL Query: ", getReservationsByQuery, [eventId, email]);
+
+//     res.status(200).json({ totalReservations });
+//   } catch (error) {
+//     console.error("Error fetching reservations:", error);
+//     res.status(500).json({ error: "Error fetching reservations" });
+//   }
+// });
+
+app.get("/api/getReservations/:eventId/:email", GetReservations);
 
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);
