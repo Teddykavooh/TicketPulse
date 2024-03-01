@@ -1,13 +1,14 @@
 const express = require("express");
 const db = require("./config/db");
 const cors = require("cors");
+const updateBookedColumn = require("./src/Components/updateBooked");
 
 const app = express();
 const PORT = 8800;
 app.use(cors());
 app.use(express.json());
 
-// My Routes
+// Event Routes
 
 // Route to get all events
 app.get("/api/get", (req, res) => {
@@ -123,6 +124,118 @@ app.delete("/api/delete/:id", (req, res) => {
       res.status(200).json({ message: "Event deleted successfully" });
     }
   });
+});
+
+// Ticket Routes (Using new methodology)
+
+// Route to create a ticket
+app.post("/api/reserveTicket", async (req, res) => {
+  try {
+    const eventId = req.body.eventId;
+    const eventName = req.body.eventName;
+    const ticketType = req.body.ticketType;
+    const vipTickets = req.body.vipTickets;
+    const regularTickets = req.body.regularTickets;
+    const amount = req.body.amount;
+
+    const createTicketQuery = `
+      INSERT INTO tickets (event, eventName, ticketType, vipTickets, regularTickets, amount)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `;
+
+    await db.query(createTicketQuery, [
+      eventId,
+      eventName,
+      ticketType,
+      vipTickets,
+      regularTickets,
+      amount,
+    ]);
+
+    // return the inserted row
+    // const newTicket = result[0];
+
+    console.log("Ticket created successfully");
+    res.status(201).json({
+      message: "Ticket created successfully",
+      // ticketId: newTicket.insertId,
+    });
+
+    // Init column update
+    updateBookedColumn();
+  } catch (error) {
+    console.error("Error creating ticket:", error);
+    res.status(500).json({ error: "Error creating ticket" });
+  }
+});
+
+// Route to get all tickets
+app.get("/api/tickets", async (req, res) => {
+  try {
+    const getAllTicketsQuery = "SELECT * FROM tickets";
+    const tickets = await db.query(getAllTicketsQuery);
+    res.status(200).json(tickets);
+  } catch (error) {
+    console.error("Error fetching tickets:", error);
+    res.status(500).json({ error: "Error fetching tickets" });
+  }
+});
+
+// Route to get a specific ticket by ID
+app.get("/api/tickets/:id", async (req, res) => {
+  try {
+    const ticketId = req.params.id;
+    const getTicketByIdQuery = "SELECT * FROM tickets WHERE id = ?";
+    const ticket = await db.query(getTicketByIdQuery, [ticketId]);
+
+    if (ticket.length === 0) {
+      res.status(404).json({ message: "Ticket not found" });
+    } else {
+      res.status(200).json(ticket[0]);
+    }
+  } catch (error) {
+    console.error("Error fetching ticket:", error);
+    res.status(500).json({ error: "Error fetching ticket" });
+  }
+});
+
+// Route to update a specific ticket by ID
+app.put("/api/tickets/:id", async (req, res) => {
+  try {
+    const ticketId = req.params.id;
+    const { eventName, ticketType, vipTickets, regularTickets, amount } =
+      req.body;
+    const updateTicketQuery = `
+      UPDATE tickets
+      SET eventName = ?, ticketType = ?, vipTickets = ?, regularTickets = ?, amount = ?
+      WHERE id = ?
+    `;
+    await db.query(updateTicketQuery, [
+      eventName,
+      ticketType,
+      vipTickets,
+      regularTickets,
+      amount,
+      ticketId,
+    ]);
+    res.status(200).json({ message: "Ticket updated successfully" });
+  } catch (error) {
+    console.error("Error updating ticket:", error);
+    res.status(500).json({ error: "Error updating ticket" });
+  }
+});
+
+// Route to delete a specific ticket by ID
+app.delete("/api/tickets/:id", async (req, res) => {
+  try {
+    const ticketId = req.params.id;
+    const deleteTicketQuery = "DELETE FROM tickets WHERE id = ?";
+    await db.query(deleteTicketQuery, [ticketId]);
+    res.status(204).end();
+  } catch (error) {
+    console.error("Error deleting ticket:", error);
+    res.status(500).json({ error: "Error deleting ticket" });
+  }
 });
 
 app.listen(PORT, () => {

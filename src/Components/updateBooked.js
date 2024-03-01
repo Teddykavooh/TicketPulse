@@ -1,11 +1,11 @@
-const db = require("./config/db");
+const db = require("../../config/db");
 
 // Function to update the booked column in the events table
 const updateBookedColumn = () => {
   const updateBookedQuery = `
       UPDATE events
       SET booked = (
-        SELECT COUNT(*)
+        SELECT COALESCE(SUM(tickets.vipTickets + tickets.regularTickets), 0)
         FROM tickets
         WHERE tickets.event = events.id
       )
@@ -20,5 +20,4 @@ const updateBookedColumn = () => {
   });
 };
 
-// Call the function to update the booked column
-updateBookedColumn();
+module.exports = updateBookedColumn;

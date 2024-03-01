@@ -42,7 +42,10 @@ const createTicketsTableQuery = `
     id INT AUTO_INCREMENT PRIMARY KEY,
     event INT,
     eventName VARCHAR(255),
-    ticketType ENUM('VIP', 'Regular') NOT NULL,
+    ticketType ENUM('VIP', 'Regular', 'Both') NOT NULL,
+    vipTickets INT NOT NULL,
+    regularTickets INT NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (event) REFERENCES events(id)
   )
 `;
