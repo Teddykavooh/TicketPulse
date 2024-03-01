@@ -238,6 +238,30 @@ app.delete("/api/tickets/:id", async (req, res) => {
   }
 });
 
+// Route to get the sum of vipTickets and regularTickets by eventID and email
+app.get("/api/getReservations/:eventId/:email", async (req, res) => {
+  try {
+    const eventId = req.params.eventId;
+    const email = req.params.email;
+
+    // Modify the SQL query to calculate the sum of vipTickets and regularTickets
+    const getReservationsByQuery = `
+      SELECT COALESCE(SUM(vipTickets + regularTickets), 0) AS totalReservations
+      FROM tickets
+      WHERE event = ? AND email = ?
+    `;
+
+    const result = await db.query(getReservationsByQuery, [eventId, email]);
+
+    const totalReservations = result[0].totalReservations;
+
+    res.status(200).json({ totalReservations });
+  } catch (error) {
+    console.error("Error fetching reservations:", error);
+    res.status(500).json({ error: "Error fetching reservations" });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);
 });
