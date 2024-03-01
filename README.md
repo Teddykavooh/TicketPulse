@@ -1,6 +1,6 @@
 # TicketPouls
 
-_Pulse Your Journey_
+## _Pulse Your Journey_
 
 ---
 
@@ -9,3 +9,16 @@ Welcome to TicketPouls, where the heartbeat of seamless ticket booking meets the
 ---
 
 ## How to get her up and running
+
+- **Prequisites**
+  - Have `node.js` and a `mySQL` database-manager installed.
+
+- **Frontend**
+  - `npm install`
+  - `npm start`
+
+- **Backend**
+  - `npm install`
+  - `npm start`
+
+---
