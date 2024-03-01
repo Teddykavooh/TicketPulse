@@ -7,6 +7,7 @@ import Events from "./components/Events";
 import Contact from "./components/Contact";
 import Login from "./components/Login";
 import Event from "./components/Event";
+import Admin from "./components/Admin";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="contact" element={<Contact />} />
         <Route path="login" element={<Login />} />
         <Route path="events/:id" element={<Event />} />
+        <Route path="admin" element={<Admin />} />
       </Route>
     </Routes>
   );
