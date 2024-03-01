@@ -46,6 +46,7 @@ const createTicketsTableQuery = `
     vipTickets INT NOT NULL,
     regularTickets INT NOT NULL,
     amount DECIMAL(10, 2) NOT NULL,
+    email VARCHAR(255) NOT NULL,
     FOREIGN KEY (event) REFERENCES events(id)
   )
 `;
