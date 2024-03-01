@@ -8,10 +8,17 @@ const Event = () => {
   const { id } = useParams();
   const [myEvent, setMyEvent] = useState([]);
 
-  useEffect(() => {
-    Axios.get(`http://localhost:8800/api/get/${id}`).then(response => {
+  const fetchData = async () => {
+    try {
+      const response = await Axios.get(`http://localhost:8800/api/get/${id}`);
       setMyEvent(response.data.data[0]);
-    });
+    } catch (error) {
+      console.error("Error fetching event data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [id]);
 
   // console.log("This is my data: " + "\n", myEvent);
@@ -43,15 +50,21 @@ const Event = () => {
   };
 
   const reserveTickets = () => {
-    // Determine the selected ticket type(s)
-    let ticketTypeV;
+    // Determine the selected ticket type(s) and price
+    let ticketTypeV, totalAmount;
     if (vipCount > 0 && regularCount > 0) {
       ticketTypeV = "Both";
+      totalAmount =
+        vipCount * myEvent.VIPTPrice + regularCount * myEvent.RegTPrice;
     } else if (vipCount > 0) {
       ticketTypeV = "VIP";
+      totalAmount = vipCount * myEvent.VIPTPrice;
     } else {
       ticketTypeV = "Regular";
+      totalAmount = regularCount * myEvent.RegTPrice;
     }
+
+    //Determine pri
 
     const ticketData = {
       eventId: myEvent.id,
@@ -59,14 +72,18 @@ const Event = () => {
       ticketType: ticketTypeV,
       vipTickets: vipCount,
       regularTickets: regularCount,
+      amount: totalAmount,
     };
 
-    Axios.post("http://localhost:8800/api/reserveTickets", ticketData)
+    Axios.post("http://localhost:8800/api/reserveTicket", ticketData)
       .then(response => {
-        console.log("Reservation successful:", response.data);
+        // console.log("Reservation successful:", response.data);
+        alert("Reservation successful");
+        fetchData();
       })
       .catch(error => {
-        console.error("Error during reservation:", error);
+        // console.error("Error during reservation:", error);
+        alert("Error during reservation");
       });
   };
 
@@ -123,7 +140,7 @@ const Event = () => {
                 <span>{regularCount}</span>
               </div>
             </div>
-            <div className="rTicketsB" onClick={() => console.log("Pressed")}>
+            <div className="rTicketsB" onClick={() => reserveTickets()}>
               Reserve Tickets
             </div>
           </div>
