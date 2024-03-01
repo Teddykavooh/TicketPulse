@@ -4,6 +4,7 @@ const cors = require("cors");
 const updateBookedColumn = require("./src/Components/updateBooked");
 const GetReservations = require("./src/Components/getReservations");
 const authRoutes = require("./src/Components/authRoutes");
+const tokenRoutes = require("./src/Components/decodeToken");
 
 const app = express();
 const PORT = 8800;
@@ -280,6 +281,9 @@ app.get("/api/getReservations/:eventId/:email", GetReservations);
 
 // Authentication routes
 app.use("/api/auth", authRoutes);
+
+// Token Decode route
+app.use("/api/decodeToken", tokenRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);

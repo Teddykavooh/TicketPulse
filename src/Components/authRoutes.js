@@ -36,7 +36,7 @@ router.post("/login", async (req, res) => {
   const getUserQuery = "SELECT * FROM users WHERE email = ?";
   db.query(getUserQuery, [email], async (err, result) => {
     if (err) {
-      console.error("Error logging in:", err);
+      //   console.error("Error logging in:", err);
       res.status(500).json({ error: "Error logging in" });
     } else {
       if (result[0].length === 0) {
@@ -66,7 +66,7 @@ router.post("/login", async (req, res) => {
         "TicketPouls",
       );
 
-      // console.log("User logged in successfully");
+      console.log("User logged in successfully", token);
       res.status(200).json({ message: "User logged in successfully", token });
     }
   });
