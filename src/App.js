@@ -8,6 +8,7 @@ import Contact from "./components/Contact";
 import Login from "./components/Login";
 import Event from "./components/Event";
 import Admin from "./components/Admin";
+import AdminEvent from "./components/Admin/Event";
 
 function App() {
   return (
@@ -18,7 +19,10 @@ function App() {
         <Route path="contact" element={<Contact />} />
         <Route path="login" element={<Login />} />
         <Route path="events/:id" element={<Event />} />
-        <Route path="admin" element={<Admin />} />
+        <Route path="admin/" element={<Admin />}>
+          {/* <Route path="events/:id" element={<AdminEvent />} /> */}
+        </Route>
+        <Route path="admin/events/:id" element={<AdminEvent />} />
       </Route>
     </Routes>
   );

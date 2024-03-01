@@ -1,0 +1,141 @@
+@use "../../../shared.scss";
+
+.adminEvent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .altP {
+    font-weight: 600;
+    font-size: 3vw;
+    color: shared.$primary-dark-color;
+  }
+
+  .anEventV {
+    border-bottom: 1vw solid shared.$secondary-color;
+    padding: 1vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 70%;
+    height: 70%;
+
+    .singleEventCont {
+      background-color: shared.$primary-dark-color;
+      opacity: 0.8;
+      padding: 1vw;
+      border-radius: 2vw;
+      text-align: center;
+      z-index: 1;
+
+      h2 {
+        color: shared.$secondary-color;
+        text-decoration: underline;
+        margin-bottom: 1vw;
+      }
+
+      p {
+        color: shared.$secondary-color;
+        font-weight: 600;
+        font-style: italic;
+        text-align: start;
+
+        span {
+          font-style: normal;
+          color: shared.$text-primary-color;
+          font-weight: 400;
+        }
+      }
+    }
+
+    .bookT {
+      height: 18vh;
+      background-color: shared.$primary-dark-color;
+      opacity: 0.8;
+      padding: 1vw;
+      border-radius: 2vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+
+      .row1 {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 100%;
+
+        svg {
+            color: antiquewhite;
+            font-size: 5vh;
+        }
+
+        .bView {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          width: 12vw;
+          color: shared.$text-primary-color;
+          // border: 2px solid white;
+
+          span {
+            font-weight: 600;
+            font-size: 2vw;
+            color: shared.$secondary-color;
+          }
+
+          .col {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            // border: 2px solid white;
+
+            label {
+              font-weight: 600;
+              font-style: italic;
+            }
+
+            .rCol {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+            }
+
+            svg {
+              font-size: 2vw;
+            }
+          }
+        }
+      }
+
+      .rTicketsB {
+        border: 3px solid shared.$secondary-color;
+        color: shared.$text-primary-color;
+        font-weight: 600;
+        font-style: italic;
+        padding: 1vh;
+        cursor: pointer;
+      }
+
+      .emailForm {
+        label {
+          color: shared.$text-primary-color;
+          font-weight: 600;
+          font-style: italic;
+        }
+        input {
+          border: none;
+          border-bottom: 3px solid shared.$secondary-color;
+          background-color: transparent;
+          // padding: 1vw;
+          text-align: center;
+          font-size: 1rem;
+          color: shared.$text-primary-color;
+        }
+      }
+    }
+  }
+}

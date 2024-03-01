@@ -1,15 +1,49 @@
 import "./index.scss";
 import React, { useState } from "react";
 import Axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { FaRegUser, FaEnvelope, FaLock, FaEye } from "react-icons/fa";
+// import * as jwt from "jsonwebtoken";
 
 const Login = () => {
+  const navigator = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  // const reDirect = async () => {
+  //   try {
+  //     const meToken = localStorage.getItem("token");
+  //     console.log("Redirect token: ", meToken);
+
+  //     // Make a POST request to the backend route to decode the token
+  //     const response = await Axios.post(
+  //       "http://localhost:8800/api/decodeToken/decode",
+  //       {
+  //         token: meToken,
+  //       },
+  //     );
+
+  //     console.log("Token Data: ", tokenData);
+
+  //     const tokenData = response.data;
+
+  //     if (tokenData.role === "admin") {
+  //       // Redirect to the admin page
+  //       navigator("/admin");
+  //     } else {
+  //       // Redirect to the events page
+  //       navigator("/events");
+  //     }
+  //   } catch (error) {
+  //     // console.error("Error decoding token:", error.message);
+  //     alert("Error decoding token");
+  //     navigator("/");
+  //   }
+  // };
+
   const handleLogin = async () => {
-    console.log("Email, Pass:", email, password);
+    // console.log("Email, Pass:", email, password);
     try {
       const response = await Axios.post(
         "http://localhost:8800/api/auth/login",
@@ -27,7 +61,9 @@ const Login = () => {
 
         // Save the token to localStorage
         localStorage.setItem("token", JSON.stringify(response.data.token));
-        console.log("Token", localStorage.getItem("token"));
+        // console.log("Token", localStorage.getItem("token"));
+        // reDirect();
+        navigator("/admin");
       } else {
         // Login failed
         // console.error("Login failed:", response.data.error);
