@@ -3,6 +3,7 @@ const db = require("./config/db");
 const cors = require("cors");
 const updateBookedColumn = require("./src/Components/updateBooked");
 const GetReservations = require("./src/Components/getReservations");
+const authRoutes = require("./src/Components/authRoutes");
 
 const app = express();
 const PORT = 8800;
@@ -276,6 +277,9 @@ app.delete("/api/tickets/:id", async (req, res) => {
 // });
 
 app.get("/api/getReservations/:eventId/:email", GetReservations);
+
+// Authentication routes
+app.use("/api/auth", authRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);
