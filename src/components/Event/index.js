@@ -59,7 +59,7 @@ const Event = () => {
     }
     // Check existing reservations for the given email and event
     Axios.get(
-      `http://localhost:8800/api/getReservations/${myEvent.id}/${userEmail}`,
+      `${process.env.REACT_APP_HOST}/api/getReservations/${myEvent.id}/${userEmail}`,
     )
       .then(response => {
         const totalReservations = response.data.totalReservations;

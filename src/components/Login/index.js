@@ -46,7 +46,7 @@ const Login = () => {
     // console.log("Email, Pass:", email, password);
     try {
       const response = await Axios.post(
-        "http://localhost:8800/api/auth/login",
+        `${process.env.REACT_APP_HOST}/api/auth/login`,
         {
           email: email,
           password: password,

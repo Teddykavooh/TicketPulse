@@ -8,7 +8,7 @@ const Admin = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    Axios.get("http://localhost:8800/api/get").then(response => {
+    Axios.get(`${process.env.REACT_APP_HOST}/api/get`).then(response => {
       setEvents(response.data.data);
     });
   }, []);

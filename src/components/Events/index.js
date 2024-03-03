@@ -9,7 +9,8 @@ const Events = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    Axios.get("http://localhost:8800/api/get").then(response => {
+    // console.log("me link: ", `${process.env.REACT_APP_HOST}`);
+    Axios.get(`${process.env.REACT_APP_HOST}/api/get`).then(response => {
       setEvents(response.data.data);
     });
   }, []);
