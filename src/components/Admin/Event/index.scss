@@ -88,32 +88,37 @@
       justify-content: space-evenly;
       align-items: center;
 
-      .row1 {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        gap: 1vw;
-        cursor: pointer;
+      // .row1 {
+      //   display: flex;
+      //   flex-direction: row;
+      //   justify-content: center;
+      //   align-items: center;
+      //   gap: 1vw;
+      //   cursor: pointer;
 
-        p {
-          text-align: center;
-          color: shared.$text-primary-color;
-        }
+      //   p {
+      //     text-align: center;
+      //     color: shared.$text-primary-color;
+      //   }
 
-        svg {
-          color: shared.$secondary-color;
-          font-size: 5vh;
-          cursor: pointer;
-        }
-      }
+      //   svg {
+      //     color: shared.$secondary-color;
+      //     font-size: 5vh;
+      //     cursor: pointer;
+      //   }
+      // }
 
-      .row2 {
+      .row {
         display: flex;
         flex-direction: row;
         justify-content: space-evenly;
         align-items: center;
         width: 100%;
+
+        p {
+          text-align: center;
+          color: shared.$text-primary-color;
+        }
 
         .iconP {
           display: flex;
@@ -131,13 +136,13 @@
             color: shared.$text-primary-color;
           }
           &:hover {
-            transform: scale(1.5);
+            transform: scale(1.2);
             color: shared.$text-primary-color;
 
             svg {
               color: shared.$text-primary-color;
             }
-            .iconSpan {
+            .iconSpan p {
               // display: contents;
               font-size: 2vw;
             }

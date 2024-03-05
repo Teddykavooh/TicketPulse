@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import Event from "./components/Event";
 import Admin from "./components/Admin";
 import AdminEvent from "./components/Admin/Event";
+import CreateEvent from "./components/Admin/CreateEvent";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           {/* <Route path="events/:id" element={<AdminEvent />} /> */}
         </Route>
         <Route path="admin/events/:id" element={<AdminEvent />} />
+        <Route path="admin/create_event" element={<CreateEvent />} />
       </Route>
     </Routes>
   );

@@ -3,6 +3,7 @@ import { BiSupport } from "react-icons/bi";
 import { VscAccount } from "react-icons/vsc";
 
 const Header = () => {
+  const token = localStorage.getItem("token");
   return (
     <div className="header">
       <ul>
@@ -15,7 +16,7 @@ const Header = () => {
         <li>
           <a href="/login">
             <VscAccount />
-            <p>Account</p>
+            <p> {token ? "Admin" : "Guest"}</p>
           </a>
         </li>
       </ul>

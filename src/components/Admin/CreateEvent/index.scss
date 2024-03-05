@@ -1,0 +1,101 @@
+@use "../../../shared.scss";
+
+.createEventPage {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  .cEventCont {
+    background-color: shared.$primary-dark-color;
+    opacity: 0.8;
+    padding: 1vw;
+    border-radius: 2vw;
+    text-align: center;
+    z-index: 1;
+    min-width: 400px;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    h2 {
+      color: shared.$secondary-color;
+      text-decoration: underline;
+      margin-bottom: 1vw;
+    }
+
+    h3 {
+      color: shared.$secondary-color;
+      margin-bottom: 1vw;
+      background-color: shared.$text-primary-color;
+    }
+
+    p {
+      color: shared.$secondary-color;
+      font-weight: 600;
+      font-style: italic;
+      text-align: start;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      // align-items: center;
+
+      // &:first-child {
+      //   color: red;
+      //   flex: 0.4;
+      //   border: 1px solid yellow;
+      // }
+
+      span {
+        font-style: normal;
+        color: shared.$text-primary-color;
+        font-weight: 400;
+        // width: 60%;
+        // border: 1px solid whitesmoke;
+      }
+
+      input {
+        border: none;
+        border-bottom: 3px solid shared.$secondary-color;
+        background-color: transparent;
+        // padding: 1vw;
+        text-align: center;
+        font-size: 1rem;
+        color: shared.$text-primary-color;
+      }
+    }
+
+    .createB {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 25%;
+      align-self: center;
+    //   border: 2px solid white;
+
+      svg {
+        font-size: 8vw;
+        color: shared.$secondary-color;
+      }
+
+      p {
+        color: shared.$text-primary-color;
+        font-size: 1.2vw;
+        
+      }
+
+      &:hover {
+        transform: scale(1.2);
+        svg {
+          color: shared.$text-primary-color;
+        }
+        p {
+          font-size: 1.2vw;
+        }
+      }
+    }
+  }
+}

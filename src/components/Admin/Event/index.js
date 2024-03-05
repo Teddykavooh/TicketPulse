@@ -6,6 +6,7 @@ import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { ImEnter } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
+import { MdAddBox } from "react-icons/md";
 
 const AdminEvent = () => {
   const navigator = useNavigate();
@@ -182,16 +183,28 @@ const AdminEvent = () => {
             </p>
           </div>
           <div className="bookT">
-            <div
-              className="row1"
-              onClick={() => {
-                setEditMode(!editMode);
-              }}
-            >
-              <ImEnter />
-              <p>Enter Edit Mode</p>
+            <div className="row">
+              <div
+                className="iconP"
+                onClick={() => {
+                  setEditMode(!editMode);
+                }}
+              >
+                <ImEnter />
+                <p>Enter Edit Mode</p>
+              </div>
+              <div
+                className="iconP"
+                onClick={() => {
+                  console.log("Create");
+                  navigator("/admin/create_event");
+                }}
+              >
+                <MdAddBox />
+                <p>Create an event</p>
+              </div>
             </div>
-            <div className="row2">
+            <div className="row">
               <div
                 className="iconP"
                 onClick={() => {
