@@ -11,36 +11,36 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  // const reDirect = async () => {
-  //   try {
-  //     const meToken = localStorage.getItem("token");
-  //     console.log("Redirect token: ", meToken);
+  const reDirect = async () => {
+    try {
+      const meToken = localStorage.getItem("token");
+      // console.log("Redirect token: ", meToken);
 
-  //     // Make a POST request to the backend route to decode the token
-  //     const response = await Axios.post(
-  //       "http://localhost:8800/api/decodeToken/decode",
-  //       {
-  //         token: meToken,
-  //       },
-  //     );
+      // Make a POST request to the backend route to decode the token
+      const response = await Axios.post(
+        `${process.env.REACT_APP_HOST}/api/decodeToken/decode`,
+        {
+          token: meToken,
+        },
+        // meToken,
+      );
 
-  //     console.log("Token Data: ", tokenData);
+      const tokenData = response.data;
+      // console.log("Token Data: ", tokenData);
 
-  //     const tokenData = response.data;
-
-  //     if (tokenData.role === "admin") {
-  //       // Redirect to the admin page
-  //       navigator("/admin");
-  //     } else {
-  //       // Redirect to the events page
-  //       navigator("/events");
-  //     }
-  //   } catch (error) {
-  //     // console.error("Error decoding token:", error.message);
-  //     alert("Error decoding token");
-  //     navigator("/");
-  //   }
-  // };
+      if (tokenData.role === 1) {
+        // Redirect to the admin page
+        navigator("/admin");
+      } else {
+        // Redirect to the events page
+        navigator("/events");
+      }
+    } catch (error) {
+      // console.error("Error decoding token:", error.message);
+      alert("Error decoding token");
+      navigator("/");
+    }
+  };
 
   const handleLogin = async () => {
     // console.log("Email, Pass:", email, password);
@@ -60,10 +60,10 @@ const Login = () => {
         alert("User logged in successfully");
 
         // Save the token to localStorage
-        localStorage.setItem("token", JSON.stringify(response.data.token));
+        localStorage.setItem("token", response.data.token);
         // console.log("Token", localStorage.getItem("token"));
-        // reDirect();
-        navigator("/admin");
+        reDirect();
+        // navigator("/admin");
       } else {
         // Login failed
         // console.error("Login failed:", response.data.error);
