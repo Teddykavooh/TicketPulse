@@ -13,7 +13,9 @@ const Event = () => {
 
   const fetchData = async () => {
     try {
-      const response = await Axios.get(`http://localhost:8800/api/get/${id}`);
+      const response = await Axios.get(
+        `${process.env.REACT_APP_HOST}/api/get/${id}`,
+      );
       setMyEvent(response.data.data[0]);
     } catch (error) {
       console.error("Error fetching event data:", error);
